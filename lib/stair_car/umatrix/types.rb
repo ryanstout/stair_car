@@ -4,108 +4,30 @@ module StairCar
     module Types
 
       def type
-        # klass = @data.class
-        # if klass == Java::CernColtMatrixTdoubleImpl::DenseDoubleMatrix2D
-        #   return :double
-        # elsif klass == Java::CernColtMatrixTdoubleImpl::SparseDoubleMatrix2D
-        #   return :double
-        # elsif klass == Java::CernColtMatrixTfloatImpl::DenseFloatMatrix2D
-        #   return :float
-        # elsif klass == Java::CernColtMatrixTfloatImpl::SparseFloatMatrix2D
-        #   return :float
-        # end
         return :double
       end
 
       def sparse?
-        # klass = @data.class
-        # if klass == Java::CernColtMatrixTdoubleImpl::DenseDoubleMatrix2D
-        #   return false
-        # elsif klass == Java::CernColtMatrixTdoubleImpl::SparseDoubleMatrix2D
-        #   return true
-        # elsif klass == Java::CernColtMatrixTfloatImpl::DenseFloatMatrix2D
-        #   return false
-        # elsif klass == Java::CernColtMatrixTfloatImpl::SparseFloatMatrix2D
-        #   return true
-        # end
-        return true
+        @data.sparse?
       end
 
 
       def type_class(type, sparse, initialize_values)
-        return Java::org.ujmp.core.MatrixFactory.method(:sparse)
+        if sparse
+          base = Java::org.ujmp.core.matrix.SparseMatrix.factory
+        else
+          base = Java::org.ujmp.core.Matrix.factory
+        end
 
+        if [:zeros, :ones, :rand, :desc, :asc].include?(initialize_values)
+          if [:asc, :desc].include?(initialize_values)
+            initialize_values = :zeros
+          end
 
-        # types = {
-        #   :zeros => {
-        #     false => {
-        #       # dense
-        #       :double => Java::cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D,
-        #       :float => Java::cern.colt.matrix.tfloat.impl.DenseFloatMatrix2D
-        #     },
-        #     true => {
-        #       # sparse
-        #       :double => Java::cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D,
-        #       :float => Java::cern.colt.matrix.tfloat.impl.SparseFloatMatrix2D
-        #     }
-        #   },
-        #   :ones => {
-        #     false => {
-        #       # dense
-        #       :double => Java::cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D,
-        #       :float => Java::cern.colt.matrix.tfloat.impl.DenseFloatMatrix2D
-        #     },
-        #     true => {
-        #       # sparse
-        #       :double => Java::cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D,
-        #       :float => Java::cern.colt.matrix.tfloat.impl.SparseFloatMatrix2D
-        #     }
-        #   },
-        #   :rand => {
-        #     false => {
-        #       # dense
-        #       :double => Java::cern.colt.matrix.tdouble.DoubleFactory2D.dense.method(:random),
-        #       :float => Java::cern.colt.matrix.tfloat.FloatFactory2D.dense.method(:random)
-        #     },
-        #     true => {
-        #       # sparse
-        #       :double => Java::cern.colt.matrix.tdouble.DoubleFactory2D.sparse.method(:random),
-        #       :float => Java::cern.colt.matrix.tfloat.FloatFactory2D.sparse.method(:random)
-        #     }
-        #   },
-        #   :desc => {
-        #     false => {
-        #       # dense
-        #       :double => Java::cern.colt.matrix.tdouble.DoubleFactory2D.dense.method(:descending),
-        #       :float => Java::cern.colt.matrix.tfloat.FloatFactory2D.dense.method(:descending)
-        #     },
-        #     true => {
-        #       # sparse
-        #       :double => Java::cern.colt.matrix.tdouble.DoubleFactory2D.sparse.method(:descending),
-        #       :float => Java::cern.colt.matrix.tfloat.FloatFactory2D.sparse.method(:descending)
-        #     }
-        #   },
-        #   :asc => {
-        #     false => {
-        #       # dense
-        #       :double => Java::cern.colt.matrix.tdouble.DoubleFactory2D.dense.method(:ascending),
-        #       :float => Java::cern.colt.matrix.tfloat.FloatFactory2D.dense.method(:ascending)
-        #     },
-        #     true => {
-        #       # sparse
-        #       :double => Java::cern.colt.matrix.tdouble.DoubleFactory2D.sparse.method(:ascending),
-        #       :float => Java::cern.colt.matrix.tfloat.FloatFactory2D.sparse.method(:ascending)
-        #     }
-        #   }
-        # }
-        #
-        # klass = types[initialize_values][sparse][type]
-        #
-        # unless klass
-        #   raise "Could not make a #{sparse ? 'sparse' : 'dense'} #{type} matrix"
-        # end
-        #
-        # return klass
+          return Proc.new { |rows, cols| base.send(initialize_values, rows, cols) }
+        else
+          raise "Type is not valid"
+        end
       end
     end
   end

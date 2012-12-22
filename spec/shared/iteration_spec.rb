@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'stair_car'
 
-describe StairCar::PMatrixIteration do
+describe StairCar::Iteration do
   it "should loop through each element" do
     matrix = StairCar::PMatrix.asc(3,4)
     total = 0

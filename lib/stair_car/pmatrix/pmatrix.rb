@@ -1,25 +1,25 @@
 require File.dirname(__FILE__) + '/../../pcolt/parallelcolt-0.9.4'
 require 'stair_car/pmatrix/types'
-require 'stair_car/pmatrix/inspect'
-require 'stair_car/pmatrix/indicies'
-require 'stair_car/pmatrix/iteration'
 require 'stair_car/pmatrix/matrix_math'
 require 'stair_car/pmatrix/transforms'
 require 'stair_car/pmatrix/compare'
+require 'stair_car/shared/iteration'
+require 'stair_car/shared/inspect'
+require 'stair_car/shared/indicies'
+require 'stair_car/shared/init_methods'
+require 'stair_car/shared/errors'
 
 
 module StairCar
   class PMatrix
     include PMatrixTypes
-    include PMatrixInspect
-    include PMatrixIndicies
-    include PMatrixIteration
     include PMatrixMatrixMath
     include PMatrixTransforms
     include PMatrixCompare
-
-    class MatrixDimensionsError < RuntimeError
-    end
+    include Iteration
+    include Inspect
+    include Indicies
+    include InitMethods
 
     attr_accessor :data
 
@@ -61,13 +61,6 @@ module StairCar
         # Passing in data directly
         @data = rows_or_data
       end
-    end
-
-    def from_array(array, klass)
-      rows, cols = array_dimensions(array)
-
-      @data = klass.new(rows, cols)
-      self[nil,nil] = array
     end
 
     def setup_default_values(initialize_values)
@@ -120,19 +113,17 @@ module StairCar
       end
     end
 
-    def array_dimensions(array)
-      if array.first.is_a?(Array)
-        # Nested array
-        rows = array.size
-        cols = array.first.size
-      else
-        # 1 dimensional array
-        cols = array.size
-        rows = 1
-      end
 
-      return rows, cols
+    # Loop through each non-zero value, pass in the value, row, column
+    def each_non_zero(&block)
+      @data.for_each_non_zero do |row, col, value|
+        yield(value, row, col)
+
+        value
+      end
     end
+
+
 
     def convert_value(value)
       if value.is_a?(Array)
@@ -151,28 +142,6 @@ module StairCar
 
     def dup
       PMatrix.new(@data.copy)
-    end
-
-    def self.init_method_names
-      [true, false].each do |sparse|
-        [:double, :float].each do |type|
-          [:zeros, :ones, :rand, :desc, :asc].each do |initialize_values|
-            method_name = :"#{sparse ? 'sp' : ''}#{initialize_values}#{type == :float ? 'f' : ''}"
-
-            yield(method_name, sparse, type, initialize_values)
-          end
-        end
-      end
-
-      # Also add float and double shortcuts
-      yield(:float, false, :float, :zeros)
-      yield(:double, false, :float, :zeros)
-    end
-
-    init_method_names do |method_name, sparse, type, initialize_values|
-      define_singleton_method(method_name) do |cols, rows|
-        new(cols, rows, type, sparse, initialize_values)
-      end
     end
   end
 end

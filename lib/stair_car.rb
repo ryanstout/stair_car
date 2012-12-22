@@ -1,4 +1,5 @@
 require 'stair_car/pmatrix/pmatrix'
+require 'stair_car/umatrix/umatrix'
 
 module StairCar
   def self.included(klass)

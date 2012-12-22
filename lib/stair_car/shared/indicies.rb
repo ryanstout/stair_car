@@ -1,6 +1,6 @@
 # Handles converting indicies into arrays of row or column offsets
 module StairCar
-  module PMatrixIndicies
+  module Indicies
     def convert_indicies(index, max_index)
       if index.is_a?(Fixnum)
         if index < 0

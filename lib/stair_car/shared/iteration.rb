@@ -1,5 +1,5 @@
 module StairCar
-  module PMatrixIteration
+  module Iteration
     def each(&block)
       rows.times do |row|
         cols.times do |col|
@@ -13,15 +13,6 @@ module StairCar
         cols.times do |col|
           yield(self[row,col], row, col)
         end
-      end
-    end
-
-    # Loop through each non-zero value, pass in the value, row, column
-    def each_non_zero(&block)
-      @data.for_each_non_zero do |row, col, value|
-        yield(value, row, col)
-
-        value
       end
     end
 

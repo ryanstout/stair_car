@@ -1,5 +1,5 @@
 module StairCar
-  module PMatrixInspect
+  module Inspect
     def inspect(screen_width = 80, rows_to_show=12)
       lines = []
       lines << "<#PMatrix(#{type}) #{rows}x#{cols} #{sparse? ? 'sparse' : 'dense'}>"

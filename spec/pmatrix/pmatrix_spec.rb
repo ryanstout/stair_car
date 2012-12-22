@@ -48,7 +48,7 @@ describe StairCar::PMatrix do
 
     lambda {
       matrix[0,nil] = [1,2,3,4,5,6]
-    }.should raise_error(StairCar::PMatrix::MatrixDimensionsError)
+    }.should raise_error(StairCar::MatrixDimensionsError)
   end
 
   it "should get and set with negative values" do

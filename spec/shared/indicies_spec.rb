@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'stair_car'
 
-describe StairCar::PMatrixIndicies do
+describe StairCar::Indicies do
   before(:all) do
     @matrix = StairCar::PMatrix.zeros(5,5)
   end
