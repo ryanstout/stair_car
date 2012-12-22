@@ -1,22 +1,22 @@
-require File.dirname(__FILE__) + '/../pcolt/parallelcolt-0.9.4'
-require 'stair_car/types'
-require 'stair_car/inspect'
-require 'stair_car/indicies'
-require 'stair_car/iteration'
-require 'stair_car/matrix_math'
-require 'stair_car/transforms'
-require 'stair_car/compare'
+require File.dirname(__FILE__) + '/../../pcolt/parallelcolt-0.9.4'
+require 'stair_car/pmatrix/types'
+require 'stair_car/pmatrix/inspect'
+require 'stair_car/pmatrix/indicies'
+require 'stair_car/pmatrix/iteration'
+require 'stair_car/pmatrix/matrix_math'
+require 'stair_car/pmatrix/transforms'
+require 'stair_car/pmatrix/compare'
 
 
 module StairCar
   class PMatrix
-    include Types
-    include Inspect
-    include Indicies
-    include Iteration
-    include MatrixMath
-    include Transforms
-    include Compare
+    include PMatrixTypes
+    include PMatrixInspect
+    include PMatrixIndicies
+    include PMatrixIteration
+    include PMatrixMatrixMath
+    include PMatrixTransforms
+    include PMatrixCompare
 
     class MatrixDimensionsError < RuntimeError
     end

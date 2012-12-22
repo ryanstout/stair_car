@@ -1,5 +1,5 @@
 module StairCar
-  module Transforms
+  module PMatrixTransforms
     def transpose
       return PMatrix.new(@data.view_dice.copy)
     end
@@ -9,7 +9,7 @@ module StairCar
     end
 
     def map(&block)
-      PMatrix.new(@data.copy).map!(&block)
+      dup.map!(&block)
     end
 
     def map!
@@ -21,7 +21,7 @@ module StairCar
     end
 
     def map_non_zero(&block)
-      PMatrix.new(@data.copy).map_non_zero!(&block)
+      dup.map_non_zero!(&block)
     end
 
     def map_non_zero!

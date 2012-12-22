@@ -28,12 +28,12 @@ describe StairCar::PMatrix do
     matrix[0,0].should == 5
   end
 
-  it "should allow set and get with a single index on vectors" do
-    matrix = StairCar::PMatrix.spzeros(3,5)
-
-    matrix[1,nil][2] == 4
-    matrix[1,2].should == 4
-  end
+  # it "should allow set and get with a single index on vectors" do
+  #   matrix = StairCar::PMatrix.spzeros(3,5)
+  #
+  #   matrix[1,nil][2] == 4
+  #   matrix[1,2].should == 4
+  # end
 
   it "should set via arrays" do
     matrix = StairCar::PMatrix.zeros(3,4)

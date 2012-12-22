@@ -1,6 +1,6 @@
 # Lookup the type for the underlying matrix implementation
 module StairCar
-  module Types
+  module PMatrixTypes
 
     def type
       klass = @data.class

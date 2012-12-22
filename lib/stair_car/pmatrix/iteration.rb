@@ -1,5 +1,5 @@
 module StairCar
-  module Iteration
+  module PMatrixIteration
     def each(&block)
       rows.times do |row|
         cols.times do |col|

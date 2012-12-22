@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'stair_car'
 
-describe StairCar::Inspect do
+describe StairCar::PMatrixTransforms do
   it "should transpose" do
     matrix = StairCar::PMatrix.asc(3,4)
     (~matrix).should_not == matrix

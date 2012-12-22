@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'stair_car'
 
-describe StairCar::Inspect do
+describe StairCar::PMatrixInspect do
   before(:all) do
   end
 

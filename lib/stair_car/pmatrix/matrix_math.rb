@@ -1,5 +1,5 @@
 module StairCar
-  module MatrixMath
+  module PMatrixMatrixMath
     class MatrixMathError < RuntimeError
     end
 

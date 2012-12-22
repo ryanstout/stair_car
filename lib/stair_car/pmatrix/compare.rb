@@ -1,5 +1,5 @@
 module StairCar
-  module Compare
+  module PMatrixCompare
     def >(val)
      map {|v| (v > val) ? 1 : 0 }
     end
