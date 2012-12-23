@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../../ujmp/ujmp-complete-0.2.5'
 
 require 'stair_car/umatrix/types'
-# require 'stair_car/matrix_math'
-require 'stair_car/shared/iteration'
+require 'stair_car/umatrix/matrix_math'
 require 'stair_car/umatrix/transforms'
 require 'stair_car/umatrix/compare'
+require 'stair_car/shared/iteration'
 require 'stair_car/shared/inspect'
 require 'stair_car/shared/indicies'
 require 'stair_car/shared/init_methods'
@@ -12,12 +12,12 @@ require 'stair_car/shared/errors'
 
 module StairCar
   class UMatrix
-    include UMatrix::Types
+    include UMatrixTypes
     # include Indicies
-    # include MatrixMath
-    include Iteration
+    include UMatrixMatrixMath
     include UMatrixTransforms
     include UMatrixCompare
+    include Iteration
     include Inspect
     include Indicies
     include InitMethods
@@ -55,6 +55,12 @@ module StairCar
           self[row,col] = i
           i += 1
         end
+      elsif initialize_values == :desc
+        i = size
+        self.map! do |val,row,col|
+          self[row,col] = i
+          i -= 1
+        end
       end
     end
 
@@ -86,8 +92,12 @@ module StairCar
       if rows && cols && rows.size == 1 && cols.size == 1 && rows.first.is_a?(Fixnum) && cols.first.is_a?(Fixnum)
         if @data.is_a?(Java::org.ujmp.core.objectmatrix.impl.ObjectCalculationMatrix)
           @data.getObject(rows.first.to_java(:int), cols.first.to_java(:int)) || 0.0
-        else
+        elsif @data.is_a?(Java::OrgUjmpCoreDoublematrixImpl::DefaultDenseDoubleMatrix2D)
+          # From jruby we have to call this way for doubles
           @data.java_send(:getObject, [Java::long, Java::long], rows.first, cols.first) || 0.0
+        else
+          # Sparse access
+          @data.getObject(rows.first, cols.first) || 0.0
         end
       else
         # Get subview, also convert rows/cols to java arrays
@@ -141,6 +151,18 @@ module StairCar
           end
         end
       end
+    end
+
+    # Loop through each non-zero value, pass in the value, row, column
+    def each_non_zero(&block)
+      @data.available_coordinates.each do |row, col|
+        val = self[row,col]
+        yield(val, row, col) if val
+      end
+    end
+
+    def dup
+      UMatrix.new(@data.clone)
     end
   end
 end
