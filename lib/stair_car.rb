@@ -1,3 +1,4 @@
+require 'java'
 require 'stair_car/pmatrix/pmatrix'
 require 'stair_car/umatrix/umatrix'
 

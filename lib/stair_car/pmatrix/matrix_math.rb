@@ -145,7 +145,7 @@ module StairCar
 
     private
       def aggrate_on_dimension(method_name, dimension, *args)
-        if dimension == 0
+        if dimension == 1
           # Get the per row
           vals = PMatrix.new(@data.like(rows, 1))
 
@@ -154,7 +154,7 @@ module StairCar
           end
 
           return vals
-        elsif dimension == 1
+        elsif dimension == 0
           # Get the per row
           vals = PMatrix.new(@data.like(1, cols))
 

@@ -38,21 +38,21 @@ describe StairCar::PMatrixMatrixMath do
 
   it 'should get the max on columns or rows' do
     matrix = StairCar::PMatrix.asc(3,5)
-    matrix.max(0).should == StairCar::PMatrix.new([[5],[10],[15]])
-    matrix.max(1).should == StairCar::PMatrix.new([[11, 12, 13, 14, 15]])
+    matrix.max(1).should == StairCar::PMatrix.new([[5],[10],[15]])
+    matrix.max(0).should == StairCar::PMatrix.new([[11, 12, 13, 14, 15]])
   end
 
   it 'should get the mins on columns or rows' do
     matrix = StairCar::PMatrix.asc(3,5)
-    matrix.min(0).should == StairCar::PMatrix.new([[1],[6],[11]])
-    matrix.min(1).should == StairCar::PMatrix.new([[1, 2, 3, 4, 5]])
+    matrix.min(1).should == StairCar::PMatrix.new([[1],[6],[11]])
+    matrix.min(0).should == StairCar::PMatrix.new([[1, 2, 3, 4, 5]])
   end
 
   it "should return the mean on each dimension" do
     matrix = StairCar::PMatrix.asc(3,5)
     matrix.mean.should == 8.0
-    matrix.mean(0).should == StairCar::PMatrix.new([[3],[8],[13]])
-    matrix.mean(1).should == StairCar::PMatrix.new([[6, 7, 8, 9, 10]])
+    matrix.mean(1).should == StairCar::PMatrix.new([[3],[8],[13]])
+    matrix.mean(0).should == StairCar::PMatrix.new([[6, 7, 8, 9, 10]])
   end
 
   it "should return the variance" do
