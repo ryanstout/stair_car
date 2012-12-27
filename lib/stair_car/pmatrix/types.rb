@@ -40,6 +40,7 @@ module StairCar
           true => {
             # sparse
             :double => Java::cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D,
+            # :double => Proc.new {|rows,cols| Java::cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D.new(rows,cols,10000.to_java(:int),0.0.to_java(:double),0.999999999.to_java(:double)) },
             :float => Java::cern.colt.matrix.tfloat.impl.SparseFloatMatrix2D
           }
         },

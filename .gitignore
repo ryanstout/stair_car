@@ -17,3 +17,5 @@ test/version_tmp
 tmp
 .rvmrc
 .idea
+*.DS_Store
+lib/.DS_Store

@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/../../pcolt/parallelcolt-0.9.4'
 require File.dirname(__FILE__) + '/../../ujmp/ujmp-complete-0.2.5'
 
 require 'stair_car/umatrix/types'
@@ -155,9 +156,11 @@ module StairCar
 
     # Loop through each non-zero value, pass in the value, row, column
     def each_non_zero(&block)
+      puts @data.inspect
       @data.available_coordinates.each do |row, col|
         val = self[row,col]
-        yield(val, row, col) if val
+        puts "v: #{row}, #{col}, #{val}"
+        yield(val, row, col)
       end
     end
 

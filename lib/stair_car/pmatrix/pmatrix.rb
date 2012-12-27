@@ -48,7 +48,7 @@ module StairCar
       elsif rows_or_data.is_a?(Fixnum)
         raise MatrixDimensionsError, "Must specify columns and rows" unless rows_or_data && cols
         klass = type_class(type, sparse, initialize_values)
-        if klass.is_a?(Method)
+        if klass.is_a?(Method) || klass.is_a?(Proc)
           # A factory method was returned, call to build
           @data = klass.call(rows_or_data, cols)
         else
