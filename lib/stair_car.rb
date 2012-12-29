@@ -1,3 +1,5 @@
+# Main StairCar module, include to get shortcuts for creating PMatrix's
+
 require 'java'
 require 'stair_car/pmatrix/pmatrix'
 require 'stair_car/umatrix/umatrix'
