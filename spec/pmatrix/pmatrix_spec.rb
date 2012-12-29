@@ -35,6 +35,14 @@ describe StairCar::PMatrix do
   #   matrix[1,2].should == 4
   # end
 
+  it 'should assign a matrix to a subview' do
+    matrix = StairCar::PMatrix.asc(3,3)
+    s = matrix[0,nil]
+    matrix[1,nil] = s
+  end
+
+  it 'should invert'
+
   it "should set via arrays" do
     matrix = StairCar::PMatrix.zeros(3,4)
     matrix[0,nil] = [1,2,3,4]

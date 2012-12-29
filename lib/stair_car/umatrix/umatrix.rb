@@ -93,12 +93,9 @@ module StairCar
       if rows && cols && rows.size == 1 && cols.size == 1 && rows.first.is_a?(Fixnum) && cols.first.is_a?(Fixnum)
         if @data.is_a?(Java::org.ujmp.core.objectmatrix.impl.ObjectCalculationMatrix)
           @data.getObject(rows.first.to_java(:int), cols.first.to_java(:int)) || 0.0
-        elsif @data.is_a?(Java::OrgUjmpCoreDoublematrixImpl::DefaultDenseDoubleMatrix2D)
+        else
           # From jruby we have to call this way for doubles
           @data.java_send(:getObject, [Java::long, Java::long], rows.first, cols.first) || 0.0
-        else
-          # Sparse access
-          @data.getObject(rows.first, cols.first) || 0.0
         end
       else
         # Get subview, also convert rows/cols to java arrays
@@ -156,10 +153,8 @@ module StairCar
 
     # Loop through each non-zero value, pass in the value, row, column
     def each_non_zero(&block)
-      puts @data.inspect
       @data.available_coordinates.each do |row, col|
         val = self[row,col]
-        puts "v: #{row}, #{col}, #{val}"
         yield(val, row, col)
       end
     end

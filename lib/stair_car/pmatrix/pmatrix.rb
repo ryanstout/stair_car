@@ -108,8 +108,15 @@ module StairCar
           end
         end
 
-        value = convert_value(value)
-        subview.assign(value)
+        if value.is_a?(PMatrix)
+          value = value.data
+        end
+
+        if value.is_a?(Array)
+          assign_values(subview, value)
+        else
+          subview.assign(value)
+        end
       end
     end
 
@@ -124,19 +131,16 @@ module StairCar
     end
 
 
+    # Takes an array and assigns it to the right cells in the subview
+    def assign_values(subview, value)
+      unless value.first.is_a?(Array)
+        value = [value]
+      end
 
-    def convert_value(value)
-      if value.is_a?(Array)
-        if value.first.is_a?(Array)
-          # Convert the array of arrays to a java array of arrays that we can use
-          klass = eval("Java::#{type}[]")
-        else
-          # Convert to an array of the type
-          klass = type
+      value.each_with_index do |row,row_index|
+        row.each_with_index do |val,col_index|
+          subview.set(row_index, col_index, val.to_java(:double))
         end
-        return value.to_java(klass)
-      else
-        return value
       end
     end
 

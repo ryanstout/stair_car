@@ -13,9 +13,5 @@ describe StairCar::Iteration do
 
   it "should loop through each row" do
     matrix = StairCar::PMatrix.asc(3,4)
-
-    # matrix.each_row do |row|
-    #   puts row.inspect
-    # end
   end
 end
