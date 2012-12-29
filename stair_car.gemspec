@@ -7,8 +7,8 @@ Gem::Specification.new do |gem|
   gem.version       = "0.0.1"
   gem.authors       = ["Ryan Stout"]
   gem.email         = ["ryanstout@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = "StairCar is a fully featured matrix for jruby (think matlab or numpy)"
+  gem.summary       = "StairCar makes it easy to do large scale matrix operations in jruby"
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)

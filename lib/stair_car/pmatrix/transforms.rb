@@ -32,6 +32,18 @@ module StairCar
       PMatrix.new(result)
     end
 
+    def count
+      count = 0
+
+      each do |val,row,col|
+        if yield(val,row,col)
+          count += 1
+        end
+      end
+
+      return count
+    end
+
     # Converts the matrix into an array
     def to_a
       array = []
