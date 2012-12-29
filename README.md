@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ryanstout/stair_car.png?branch=master)](https://travis-ci.org/ryanstout/stair_car)
+
 # StairCar
 
 StairCar is a matlab or numpy like matrix library gem for jruby.  It provides several matrix classes that wrap different Java based matrix libraries in a simple ruby interface.  It overloads ruby operators to provide a matlab like functionality.
