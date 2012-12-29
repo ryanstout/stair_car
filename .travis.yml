@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  - jruby-1.7.0
+  - jruby-1.7.1
+  - jruby-head
+
+# uncomment this line if your project needs to run something other than `rake`:
+script: bundle exec rspec spec
