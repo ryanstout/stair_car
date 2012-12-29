@@ -64,6 +64,8 @@ StairCar supports many options to generate subviews.  You can pass in the follow
 - nil - Selects the whole row/column
 - You can also pass in a combination of arrays and ranges.
 
+For example:
+
     m[0..1,nil]
     => <#PMatrix() 2x3 dense>
     1 2 3
@@ -91,7 +93,7 @@ You can assign a scalar to every value in a subview
     4 5 6
     7 8 9
 
-You can assign an array to a subview
+You can assign an array or other matrix to a subview
 
     # Assign an array to a row
     m[0..1,nil] = [[1,2,3],[4,5,6]]
@@ -102,9 +104,97 @@ You can assign an array to a subview
     7 8 9
 
     # Multiple row or column subviews
-    m[[1,2]]
+    m[[1,2],2]
+    => <#PMatrix() 2x1 dense>
+    6
+    9
 
+### Math
 
+Math is simple, just use the standard +,-,/  * does matrix multiplication and ** does element wise multiplication.
+
+    a = asc(3,3)
+    b = asc(3,3)
+
+    a + b
+    => <#PMatrix(double) 3x3 dense>
+    2  4  6
+    8  10 12
+    14 16 18
+
+    a * b
+    => <#PMatrix(double) 3x3 dense>
+    30  36  42
+    66  81  96
+    102 126 150
+
+    a ** b
+    => <#PMatrix(double) 3x3 dense>
+    1  4  9
+    16 25 36
+    49 64 81
+
+### Stats
+
+All stats operations can operate on the whole matrix, or just the columns or the rows.  Just pass in a dimension to specify cols or rows (rows = 0, cols = 1)
+
+    m = asc(3,3)
+    m.sum
+    => 45.0
+
+    m.sum(0)
+    => <#PMatrix(double) 1x3 dense>
+    12 15 18
+
+    m.sum(1)
+    => <#PMatrix(double) 3x1 dense>
+    6
+    15
+    24
+
+Supported operations
+
+- sum
+- max
+- min
+- mean
+- variance
+- std
+
+### Iteration
+
+Matrices support the standard ruby each, each_with_index, and map operations.  However each passes in a value, row, col instead of just a value.
+
+It also supports each_column and each_row
+
+You can also iterate or map on non-zero elements, which makes mapping sparse matrices much more efficient.  Use #each_non_zero, #map_non_zero, or #map_non_zero!  Using ! on the end of map or map_non_zero means all updates will happen to the original matrix, thus saving memory.
+
+    m = spzeros(5,5)
+    => <#PMatrix(double) 5x5 sparse>
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+
+    m[0,2] = 5
+    m[3,4] = 10
+
+    m
+    => <#PMatrix(double) 5x5 sparse>
+    0  0  5  0  0
+    0  0  0  0  0
+    0  0  0  0  0
+    0  0  0  0  10
+    0  0  0  0  0
+
+    m.map_non_zero! {|value,row,col| value * 2 }
+    => <#PMatrix(double) 5x5 sparse>
+    0  0  10 0  0
+    0  0  0  0  0
+    0  0  0  0  0
+    0  0  0  0  20
+    0  0  0  0  0
 
 ## Installation
 
