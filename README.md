@@ -14,7 +14,7 @@ StairCar is geared towards two dimensional matrices and treats vectors as a 1 by
 
 ## Features
 
-- Dense and Sparse matrices
+- Dense and Sparse matrices (with 2^64 elements)
 - Ability to efficiently iterate on non-zero elements in sparse matrices
 - Subviews (that reference the original matrix)
 - Matrix, vector, and scalar add, sub, mul, div, and matrix multiply.  (In any combination)
