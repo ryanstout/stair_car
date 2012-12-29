@@ -140,6 +140,8 @@ Math is simple, just use the standard +,-,/  * does matrix multiplication and **
 
 Transpose can be done with either matrix.transpose or ~matrix
 
+Do matrix.inv to invert a matrix.
+
 ### Stats
 
 All stats operations can operate on the whole matrix, or just the columns or the rows.  Just pass in a dimension to specify cols or rows (rows = 0, cols = 1)
