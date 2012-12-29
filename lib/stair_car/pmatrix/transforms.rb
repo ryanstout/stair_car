@@ -8,6 +8,19 @@ module StairCar
       return transpose
     end
 
+    def inv
+      algebra = Java::cern.colt.matrix.tdouble.algo.DenseDoubleAlgebra.new
+      begin
+        return PMatrix.new(algebra.inverse(@data))
+      rescue Java::JavaLang::IllegalArgumentException => e
+        if e.message == 'Matrix is singular.' || e.message == 'A is singular.'
+          raise InverseMatrixIsSignular, e.message
+        else
+          raise
+        end
+      end
+    end
+
     def map(&block)
       dup.map!(&block)
     end

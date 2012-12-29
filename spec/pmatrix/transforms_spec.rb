@@ -8,6 +8,18 @@ describe StairCar::PMatrixTransforms do
     (~~matrix).should == matrix
   end
 
+  it 'should invert' do
+    matrix = StairCar::PMatrix.new([[4,3],[3,2]])
+    matrix.inv.should == StairCar::PMatrix.new([[-2, 3], [3, -4]])
+  end
+
+  it 'should raise an error when it fails to invert' do
+    matrix = StairCar::PMatrix.asc(3,3)
+    lambda {
+      matrix.inv
+    }.should raise_error(StairCar::InverseMatrixIsSignular)
+  end
+
   it "should map and map_non_zero" do
     matrix = StairCar::PMatrix.zeros(2,3)
     matrix[0,0] = 5

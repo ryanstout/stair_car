@@ -134,6 +134,10 @@ Math is simple, just use the standard +,-,/  * does matrix multiplication and **
     16 25 36
     49 64 81
 
+### Transpose and inverse
+
+Transpose can be done with either matrix.transpose or ~matrix
+
 ### Stats
 
 All stats operations can operate on the whole matrix, or just the columns or the rows.  Just pass in a dimension to specify cols or rows (rows = 0, cols = 1)
@@ -196,6 +200,13 @@ You can also iterate or map on non-zero elements, which makes mapping sparse mat
     0  0  0  0  20
     0  0  0  0  0
 
+## Planned Features
+
+- JBLAS support
+- MRI support (perhaps with NMatrix)
+- More statistical features
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -210,20 +221,3 @@ Or install it yourself as:
 
     $ gem install stair_car
 
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
-
-
-
-TODO:
-- Use nil in .view_selection
-- sparse? fails on views - should have a view? also
