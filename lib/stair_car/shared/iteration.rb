@@ -3,7 +3,7 @@ module StairCar
     def each(&block)
       rows.times do |row|
         cols.times do |col|
-          yield(self[row,col])
+          yield(self.value_at(row,col))
         end
       end
     end
@@ -11,7 +11,7 @@ module StairCar
     def each_with_index(&block)
       rows.times do |row|
         cols.times do |col|
-          yield(self[row,col], row, col)
+          yield(self.value_at(row,col), row, col)
         end
       end
     end

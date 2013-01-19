@@ -4,4 +4,8 @@ module StairCar
 
   class InverseMatrixIsSignular < RuntimeError
   end
+  
+  class IncorrectMatrixDimensions < RuntimeError
+  end
+  
 end

@@ -87,29 +87,43 @@ module StairCar
       return shape[1]
     end
 
+    # Takes a 1x1 matrix and converts it to an integer, raises an exception
+    # if the matrix is not 1x1
+    def to_i
+      if rows != 1 || cols != 1
+        raise IncorrectMatrixDimensions, "to_i should only be called on 1x1 matricies"
+      end
+      return value_at(0, 0)
+    end
+
+    # Gets the value at the row and column
+    def value_at(row, col)
+      row = convert_indicies(row, self.rows)
+      col = convert_indicies(col, self.cols)
+
+      # Returns either the value in a cell or a subview
+      # From jruby we have to call this way for doubles
+      if @data.is_a?(Java::org.ujmp.core.objectmatrix.impl.ObjectCalculationMatrix)
+        @data.getObject(row.first.to_java(:int), col.first.to_java(:int)) || 0.0
+      else
+        # From jruby we have to call this way for doubles
+        @data.java_send(:getObject, [Java::long, Java::long], row.first, col.first) || 0.0
+      end
+    end
+
     def [](rows, cols)
       rows = convert_indicies(rows, self.rows)
       cols = convert_indicies(cols, self.cols)
 
-      # Returns either the value in a cell or a subview
-      if rows && cols && rows.size == 1 && cols.size == 1 && rows.first.is_a?(Fixnum) && cols.first.is_a?(Fixnum)
-        if @data.is_a?(Java::org.ujmp.core.objectmatrix.impl.ObjectCalculationMatrix)
-          @data.getObject(rows.first.to_java(:int), cols.first.to_java(:int)) || 0.0
-        else
-          # From jruby we have to call this way for doubles
-          @data.java_send(:getObject, [Java::long, Java::long], rows.first, cols.first) || 0.0
-        end
+      # Get subview, also convert rows/cols to java arrays
+      if !rows && !cols
+        return self.class.new(@data)
       else
-        # Get subview, also convert rows/cols to java arrays
-        if !rows && !cols
-          return self.class.new(@data)
+        if rows
+          return self.class.new(@data.select(Java::OrgUjmpCoreCalculation::Calculation.LINK, rows, cols))
         else
-          if rows
-            return self.class.new(@data.select(Java::OrgUjmpCoreCalculation::Calculation.LINK, rows, cols))
-          else
-            # If row is nil, we need to lookup by columns directly
-            return self.class.new(@data.select_columns(Java::OrgUjmpCoreCalculation::Calculation.LINK, cols))
-          end
+          # If row is nil, we need to lookup by columns directly
+          return self.class.new(@data.select_columns(Java::OrgUjmpCoreCalculation::Calculation.LINK, cols))
         end
       end
     end
@@ -156,7 +170,7 @@ module StairCar
     # Loop through each non-zero value, pass in the value, row, column
     def each_non_zero(&block)
       @data.available_coordinates.each do |row, col|
-        val = self[row,col]
+        val = self.value_at(row,col)
         yield(val, row, col)
       end
     end

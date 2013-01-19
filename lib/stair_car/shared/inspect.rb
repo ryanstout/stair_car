@@ -76,7 +76,7 @@ module StairCar
       max_cell_width = 0
       rows.times do |row|
         cols.times do |column|
-          cell_value = self[row, column]
+          cell_value = self.value_at(row, column)
           width = formatter.call(cell_value).size + 1
 
           # Track the biggest cell width we've seen so far
@@ -97,11 +97,11 @@ module StairCar
       def row_line_text(row_number, formatter, max_columns, screen_width, cell_width, hidden_columns)
         line = ''
         [self.cols-1, max_columns].min.times do |column|
-          cell_value = self[row_number, column]
+          cell_value = self.value_at(row_number, column)
           line << formatter.call(cell_value).ljust(cell_width)
         end
 
-        last_cell = formatter.call(self[row_number, -1]).ljust(cell_width-1)
+        last_cell = formatter.call(self.value_at(row_number, -1)).ljust(cell_width-1)
         padding_size = screen_width - line.size - last_cell.size - 1
         line << ('.' * padding_size) + ' ' if hidden_columns
 

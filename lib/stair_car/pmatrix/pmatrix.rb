@@ -71,17 +71,33 @@ module StairCar
       end
     end
 
+    # Takes a 1x1 matrix and converts it to an integer, raises an exception
+    # if the matrix is not 1x1
+    def to_i
+      if rows != 1 || cols != 1
+        raise IncorrectMatrixDimensions, "to_i should only be called on 1x1 matricies"
+      end
+      return value_at(0, 0)
+    end
+
+    # Gets the value at the row and column
+    def value_at(row, col)
+      row = convert_indicies(row, self.rows)
+      col = convert_indicies(col, self.cols)
+      return @data.get(row.first, col.first)
+    end
+
     def [](rows, cols)
       rows = convert_indicies(rows, self.rows)
       cols = convert_indicies(cols, self.cols)
 
       # Returns either the value in a cell or a subview
-      if rows && cols && rows.size == 1 && cols.size == 1 && rows.first.is_a?(Fixnum) && cols.first.is_a?(Fixnum)
-        @data.get(rows.first, cols.first)
-      else
+      # if rows && cols && rows.size == 1 && cols.size == 1 && rows.first.is_a?(Fixnum) && cols.first.is_a?(Fixnum)
+      #   @data.get(rows.first, cols.first)
+      # else
         # Get subview, also convert rows/cols to java arrays
         self.class.new(@data.view_selection(rows && rows.to_java(:int), cols && cols.to_java(:int)))
-      end
+      # end
     end
 
     def []=(rows, cols, value)
