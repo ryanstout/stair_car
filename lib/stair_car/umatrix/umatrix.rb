@@ -10,6 +10,7 @@ require 'stair_car/shared/inspect'
 require 'stair_car/shared/indicies'
 require 'stair_car/shared/init_methods'
 require 'stair_car/shared/errors'
+require 'stair_car/shared/methods'
 
 module StairCar
   class UMatrix
@@ -22,6 +23,7 @@ module StairCar
     include Inspect
     include Indicies
     include InitMethods
+    include Methods
 
     attr_accessor :data
 
