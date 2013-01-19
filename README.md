@@ -55,7 +55,13 @@ Sparse: spzeros, spones, sprand, spasc, spdesc
 You can get any element by passing in its row and column:
 
     m[0,1]
-    => 2
+    => <#PMatrix() 1x1 dense>
+    2
+
+### You can get the float value of a cell by doing:
+
+    m.value_at(0,1)
+    => 2.0
 
 ### Subviews
 
