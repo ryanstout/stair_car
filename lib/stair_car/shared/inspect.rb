@@ -11,7 +11,7 @@ module StairCar
 
       # Sometimes we only have a 1x1 matrix, and lookups will return a float
       if rows == 1 && cols == 1
-        lines << formatter.call(self[0,0])
+        lines << formatter.call(self.value_at(0,0))
         return lines.join("\n")
       end
 
