@@ -58,10 +58,14 @@ You can get any element by passing in its row and column:
     => <#PMatrix() 1x1 dense>
     2
 
-### You can get the float value of a cell by doing:
+### Get Float Value:
+
+All lookups with [row,col] return a subview, use #value_at to get the float value.
 
     m.value_at(0,1)
     => 2.0
+
+Keep in mind that all math operations can be done without converting back to float.
 
 ### Subviews
 
