@@ -38,7 +38,7 @@ module StairCar
       rows.times do |row|
         col_array = []
         cols.times do |col|
-          col_array << self[row,col]
+          col_array << self.value_at(row,col)
         end
         array << col_array
       end
