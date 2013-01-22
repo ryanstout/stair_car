@@ -104,6 +104,10 @@ module StairCar
       rows = convert_indicies(rows, self.rows)
       cols = convert_indicies(cols, self.cols)
 
+      if value.is_a?(PMatrix) && value.rows == 1 && value.cols == 1
+        value = value.value_at(0,0)
+      end
+
       # Set either the value in a cell or a subview with a matrix
       if rows && cols && rows.size == 1 && cols.size == 1 && rows.first.is_a?(Fixnum) && cols.first.is_a?(Fixnum)
         @data.set(rows.first, cols.first, value)
